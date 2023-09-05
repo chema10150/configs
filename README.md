@@ -1,2 +1,2 @@
 # configs
-random dot files
+random dot (public) files
