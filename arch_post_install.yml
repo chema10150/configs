@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  become: yes  # Run tasks as sudo
+  tasks:
+    - name: Update all packages
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install base-devel package group
+      pacman:
+        name: base-devel
+        state: present
+
+    - name: Install git
+      pacman:
+        name: git
+        state: present
+
+    - name: Install xorg
+      pacman:
+        name: xorg
+        state: present
+
+    - name: Install libxft
+      pacman:
+        name: libxft
+        state: present
+
+    - name: Install libxinerama
+      pacman:
+        name: libxinerama
+        state: present
+
+    - name: Install Firefox
+      pacman:
+        name: firefox
+        state: present
+
+    - name: Clone dwm from suckless
+      git:
+        repo: 'https://git.suckless.org/dwm'
+        dest: '~/dwm'
+
+    - name: Clone st from suckless
+      git:
+        repo: 'https://git.suckless.org/st'
+        dest: '~/st'
+
+    - name: Compile and install st
+      command: 
+        cmd: sudo make clean install
+        chdir: '~/st'
+
+    - name: Compile and install dwm
+      command: 
+        cmd: sudo make clean install
+        chdir: '~/dwm'
+
+    - name: Create .xinitrc to exec dwm
+      copy:
+        content: "exec dwm\n"
+        dest: "~/.xinitrc"
