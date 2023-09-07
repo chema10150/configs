@@ -1,0 +1,8 @@
+super + F1
+	firefox
+
+super + Return
+	kitty
+
+super + F2
+	thunar
